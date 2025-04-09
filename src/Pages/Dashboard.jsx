@@ -1,16 +1,19 @@
 import logo from '../assets/logo.png'
-
+import { IoMdHome } from "react-icons/io";
+import { FaClipboardQuestion } from "react-icons/fa6";
+import { FaTrophy } from "react-icons/fa6";
+import { IoMdSettings } from "react-icons/io";
 export default function DashBoard() {
 
     return (
         <div className='flex'>
-            <div className='flex flex-col px-10 items-left  w-screen h-screen flex-1/5 border-r-2 border-gray-400' >
-               <img className='w-40 my-5' src={logo} />
-               <div className='my-1'><a>Home</a></div>
-               <div className='my-1'><a>Quests</a></div>
-               <div className='my-1'><a>Profile</a></div>
-               <div className='my-1'><a>Achivments</a></div>
-               <div className='my-1'><a>Settings</a></div>
+            <div className='flex flex-col px-10 items-left  w-screen h-screen flex-1/5 border-r-2 border-gray-200' >
+               <img className='w-40 my-5 ' src={logo} />
+               <div className='py-2 text-gray-600 font-semibold flex items-center hover:bg-amber-600 '> <IoMdHome className='size-6 mr-2'/><a className='text-xl'>Home</a></div>
+               <div className='py-2 text-gray-600 font-semibold flex items-center '><FaClipboardQuestion className='size-6 mr-2' /><a className='text-xl'> Quests</a></div>
+               <div className='py-2 text-gray-600 font-semibold flex items-center'><FaTrophy className='size-6 mr-2'  /><a className='text-xl'>Achivments</a></div>
+               <div className='py-2 text-gray-600 font-semibold flex items-center'><IoMdSettings className='size-6 mr-2' /><a className='text-xl'>Settings</a></div>
+               <div className='mt-auto mb-5 flex items-center'><a>Profile</a></div>
             </div>
 
             <div className=' w-full'>
