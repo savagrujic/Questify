@@ -3,6 +3,7 @@ import { IoMdHome } from "react-icons/io";
 import { FaClipboardQuestion } from "react-icons/fa6";
 import { FaTrophy } from "react-icons/fa6";
 import { IoMdSettings } from "react-icons/io";
+import { auth } from '../config/firebase-config';
 export default function DashBoard() {
 
     return (
@@ -13,7 +14,7 @@ export default function DashBoard() {
                <div className='py-2 text-gray-600 font-semibold flex items-center '><FaClipboardQuestion className='size-6 mr-2' /><a className='text-xl'> Quests</a></div>
                <div className='py-2 text-gray-600 font-semibold flex items-center'><FaTrophy className='size-6 mr-2'  /><a className='text-xl'>Achivments</a></div>
                <div className='py-2 text-gray-600 font-semibold flex items-center'><IoMdSettings className='size-6 mr-2' /><a className='text-xl'>Settings</a></div>
-               <div className='mt-auto mb-5 flex items-center'><a>Profile</a></div>
+               <div className='mt-auto mb-5 flex items-center'><a>{auth.currentUser.displayName}</a></div>
             </div>
 
             <div className=' w-full'>
