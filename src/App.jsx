@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route,Link } from "react-router-dom";
 import Login from './Pages/Login';
 import Register from './Pages/Register'
 import Dashboard from './Pages/Dashboard'
+import Home from './Pages/Home';
 function App() {
   const [count, setCount] = useState(0)
 
@@ -11,7 +12,7 @@ function App() {
     <BrowserRouter>
       <Routes>
           
-        <Route path='/' element = {<p className='text-3xl'>Home</p>} />
+        <Route path='/' element = {<Home />} />
         <Route path='/login' element = {<Login />} />
         <Route path='/register' element = {<Register />} />
         <Route path='/dashboard/*' element = {<Dashboard />} />

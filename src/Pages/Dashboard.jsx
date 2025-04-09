@@ -34,7 +34,7 @@ export default function DashBoard() {
     function LogOut() {
     signOut(auth)
         .then(() => {
-            navigate('/login')
+            navigate('/')
     })
 }
 
