@@ -14,7 +14,7 @@ function App() {
         <Route path='/' element = {<p className='text-3xl'>Home</p>} />
         <Route path='/login' element = {<Login />} />
         <Route path='/register' element = {<Register />} />
-        <Route path='/dashboard' element = {<Dashboard />} />
+        <Route path='/dashboard/*' element = {<Dashboard />} />
       </Routes>
     </BrowserRouter>
   )
