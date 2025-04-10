@@ -1,5 +1,7 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Progress } from "@material-tailwind/react";
+import { collection, getDoc, query,getDocs, doc } from "firebase/firestore";
+import { auth, db } from "../../config/firebase-config";
 
 export default function() {
    
@@ -46,6 +48,31 @@ export default function() {
       ]);
       const [selectedQuest, setSelectedQuest] = useState('')
       
+
+      async function AddQuestsFromDatabase() {
+        const useresRef = collection(db, 'Users') // referensa kolekcije user
+        const questsRef = collection(db, 'dailyquests')
+        const qUsers = query(useresRef) // query za sve user korisnike
+        const qDailyQuests = query(questsRef) // query za daily questove
+        const qUsersSnapshot = await getDocs(qUsers) // vraca niz svih dokumenata u user kolekciji
+        const qQuestsSnapshot = await getDocs(qDailyQuests)
+        const tempquests =[]
+        qQuestsSnapshot.forEach((doc) => {
+           
+               tempquests.push({...doc.data()})
+                
+                
+        })
+        setQuests(tempquests)
+      }
+
+
+      useEffect(() => {
+        AddQuestsFromDatabase()
+      },[])
+
+
+
       function MakeQuestCompleted(name) {
 
            const updatedQuest = quests.map((quest) => {
@@ -58,7 +85,7 @@ export default function() {
       }
     return (
         <div>
-            <div className="m-7">
+            <div className="m-5 max-h-screen overflow-y-auto ">
             <h1 className="text-4xl ">Daily Quests</h1>
            
                 {quests.map((quest) => (
