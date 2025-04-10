@@ -1,5 +1,8 @@
 
-import { useNavigate } from "react-router"
+import { useEffect } from "react";
+import { useFetcher, useNavigate } from "react-router"
+import { addDoc,collection } from "firebase/firestore";
+import { db } from "../config/firebase-config";
 export default function Home() {
 
     const navigate = useNavigate()

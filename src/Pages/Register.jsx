@@ -1,7 +1,8 @@
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth"
 import { useState } from "react"
-import { auth } from "../config/firebase-config"
+import { auth, db } from "../config/firebase-config"
 import { useNavigate } from "react-router"
+import { addDoc, collection } from "firebase/firestore"
 export default function Register() {
     const navigate = useNavigate()
     const [email, setEmail] = useState('')
@@ -18,6 +19,14 @@ export default function Register() {
           updateProfile(auth.currentUser, {
             displayName: `${firstName} ${lastName}`
           }).then (() => {
+            addDoc(collection(db, 'Users'), {
+              displayName: auth.currentUser.displayName,
+              level: 0,
+              xp: 0,
+              money: 0,
+              Quests: [],
+              DailyQuests: []
+            })
             console.log(auth.currentUser.displayName)
             navigate('/dashboard')
           })
