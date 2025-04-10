@@ -8,6 +8,7 @@ import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { useState } from 'react';
 import { Routes, Route, Navigate, Link } from 'react-router-dom';
 import { useNavigate,useLocation } from 'react-router-dom';
+import DashBoardHome from './DashboardPage/DashBoardHome';
 export default function DashBoard() {
     const navigate = useNavigate()
     const location = useLocation()
@@ -20,8 +21,8 @@ export default function DashBoard() {
 
     //Postavi css activnog diva
     const navItem = (path) => `cursor-pointer ${isActive(path)
-        ? 'py-2 text-gray-600 font-semibold flex items-center bg-blue-400 rounded-xl '
-        : 'py-2 my-1 text-gray-600 font-semibold flex items-center hover:bg-blue-100 hover:rounded-xl duration-300 '
+        ? 'py-2 px-5 text-gray-600 font-semibold flex items-center bg-blue-400 rounded-xl '
+        : 'py-2 px-5 my-1 text-gray-600 font-semibold flex items-center hover:bg-blue-50 hover:rounded-xl duration-100 '
     }`
     
     //Postavi Ime Korisnika
@@ -41,7 +42,7 @@ export default function DashBoard() {
 
     return (
         <div className='flex'>
-            <div className='flex flex-col px-10 items-left  w-screen h-screen flex-1/5 border-r-2 border-gray-200' >
+            <div className='flex flex-col px-10 items-left  w-screen h-screen flex-2/7 border-r-2 border-gray-200' >
                <img className='w-40 my-5 ' src={logo} />
                <div onClick= {() => navigate('/dashboard/home')} className= {navItem('/dashboard/home')}> <IoMdHome className='size-6 mr-2'/><a className='text-xl'>Home</a></div>
                <div onClick= {() => navigate('/dashboard/quests')} className =  {navItem('/dashboard/quests')}><FaClipboardQuestion className='size-6 mr-2' /><a  className='text-xl'> Quests</a></div>
@@ -53,7 +54,7 @@ export default function DashBoard() {
             <div className=' w-full'>
               <Routes>
                 <Route index element = {<Navigate to='home' />}/>
-                <Route path='home' element={<p>Home</p>} />
+                <Route path='home' element={<DashBoardHome />} />
                 <Route path='quests' element={<p>Quest</p>} />
                 <Route path='achivment' element={<p>Achivments</p>} />
                 <Route path='profile' element={<p>Profile</p>} />
