@@ -1,51 +1,17 @@
 import { useEffect, useState } from "react"
 import { Progress } from "@material-tailwind/react";
-import { collection, getDoc, query,getDocs, doc } from "firebase/firestore";
+import { collection, getDoc, query,getDocs, doc, updateDoc } from "firebase/firestore";
 import { auth, db } from "../../config/firebase-config";
 
 export default function() {
    
-     function ProgressDefault() {
-        return <Progress value={50} />;
+     function RnadomBetwwen(min,max) {
+        return Math.floor(Math.random() * (max-min+1))+ min
       }
    
    
     const [selected, setSelected] = useState(false)
-    const [quests, setQuests] = useState([
-        {
-          name: "Physical Quest",
-          description: "Run 5 kilometers in 30 minutes",
-          xp: 50,
-          category: "Physical",
-          type: "Exercise",
-          difficulty: "Medium",
-          completed: false,
-          deadline: 0,
-          color: 'bg-green-200'
-        },
-        {
-          name: "Mental Quest 1",
-          description: "Read a book for 30 minutes",
-          xp: 40,
-          category: "Mental",
-          type: "Learning",
-          difficulty: "Easy",
-          completed: false,
-          deadline: 0,
-          color: 'bg-purple-200'
-        },
-        {
-          name: "Social Quest 1",
-          description: "Say good morning to 10 people",
-          xp: 30,
-          category: "Social",
-          type: "Communication",
-          difficulty: "Easy",
-          completed: false,
-          deadline: 0,
-          color: 'bg-blue-200'
-        },
-      ]);
+    const [quests, setQuests] = useState([]);
       const [selectedQuest, setSelectedQuest] = useState('')
       
 
@@ -57,13 +23,21 @@ export default function() {
         const qUsersSnapshot = await getDocs(qUsers) // vraca niz svih dokumenata u user kolekciji
         const qQuestsSnapshot = await getDocs(qDailyQuests)
         const tempquests =[]
-        qQuestsSnapshot.forEach((doc) => {
-           
-               tempquests.push({...doc.data()})
-                
-                
+        for(let i = 0; i < 3; i++) {
+          const item = qQuestsSnapshot.docs[RnadomBetwwen(0,qQuestsSnapshot.docs.length)]
+          tempquests.push({...item.data()})
+        }
+        await setQuests(tempquests)
+
+        qUsersSnapshot.forEach((user) => {
+          if(user.data().displayName === auth.currentUser.displayName) {
+            console.log(quests)
+            updateDoc(doc(db, 'Users', user.id), {
+              DailyQuests: tempquests
+            })
+          }
         })
-        setQuests(tempquests)
+        
       }
 
 
@@ -85,8 +59,8 @@ export default function() {
       }
     return (
         <div>
-            <div className="m-5 max-h-screen overflow-y-auto ">
-            <h1 className="text-4xl ">Daily Quests</h1>
+            <div className="m-5 max-h-screen overflow-y-auto [&::-webkit-scrollbar]:hidden ">
+            <h1 className="text-4xl text-purple-700 font-bold ">Daily Quests</h1>
            
                 {quests.map((quest) => (
                     
