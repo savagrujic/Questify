@@ -5,11 +5,11 @@ import { auth, db } from "../../config/firebase-config";
 
 export default function() {
    
-     function RnadomBetwwen(min,max) {
+     function RandomNumber(min,max) {
         return Math.floor(Math.random() * (max-min+1))+ min
       }
    
-   
+    const [daily, setDaily] = useState(false)
     const [selected, setSelected] = useState(false)
     const [quests, setQuests] = useState([]);
       const [selectedQuest, setSelectedQuest] = useState('')
@@ -22,21 +22,18 @@ export default function() {
         const qDailyQuests = query(questsRef) // query za daily questove
         const qUsersSnapshot = await getDocs(qUsers) // vraca niz svih dokumenata u user kolekciji
         const qQuestsSnapshot = await getDocs(qDailyQuests)
-        const tempquests =[]
-        for(let i = 0; i < 3; i++) {
-          const item = qQuestsSnapshot.docs[RnadomBetwwen(0,qQuestsSnapshot.docs.length)]
-          tempquests.push({...item.data()})
-        }
-        await setQuests(tempquests)
-
-        qUsersSnapshot.forEach((user) => {
-          if(user.data().displayName === auth.currentUser.displayName) {
-            console.log(quests)
-            updateDoc(doc(db, 'Users', user.id), {
-              DailyQuests: tempquests
-            })
+        const temparr = []
+        const randomnumberarr = []
+        
+        while(randomnumberarr.length < 3) {
+          const randomnum = RandomNumber(0,qQuestsSnapshot.docs.length-1)
+          if(!randomnumberarr.includes(randomnum)) {
+            randomnumberarr.push(randomnum)
+            temparr.push(qQuestsSnapshot.docs[randomnum].data())
           }
-        })
+        }
+     
+        setQuests(temparr)
         
       }
 
